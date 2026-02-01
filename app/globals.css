@@ -33,3 +33,9 @@ body {
     background-color 0.2s ease,
     color 0.2s ease;
 }
+.input {
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+}

@@ -81,7 +81,7 @@ export default function ProductsPage() {
 
         {/* Right: Add Product Button */}
         <Link
-          href="/products/add"
+          href="/dashboard/products/add"
           className="
             flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium
             bg-blue-600 text-white hover:bg-blue-700 transition-shadow
