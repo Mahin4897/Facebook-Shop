@@ -187,13 +187,13 @@ export default function CustomersPage() {
   // Handle view details click
   const handleViewDetails = (e, customerId) => {
     e.stopPropagation();
-    router.push(`/customers/${customerId}`);
+    router.push(`/dashboard/customers/${customerId}`);
   };
 
   // Handle edit click
   const handleEditClick = (e, customerId) => {
     e.stopPropagation();
-    router.push(`/customers/${customerId}/edit`);
+    router.push(`/dashboard/customers/${customerId}`);
   };
 
   // Clear all filters
@@ -240,7 +240,7 @@ export default function CustomersPage() {
         </div>
         <div className="flex items-center gap-4">
           <button
-            onClick={() => router.push("/customers/add")}
+            onClick={() => router.push("/dashboard/customers/add")}
             className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
           >
             <Plus className="h-4 w-4" />

@@ -106,7 +106,6 @@ export default function ProductsPage() {
       <ProductTable
         products={products}
         search={search}
-        sort={sort}
         loading={isLoading}
         r1="Product"
         r2="SKU"
