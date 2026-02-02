@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/auth/layout.jsx", "components/products/ProductTable.jsx", "components/orders/OrderItemForm.jsx", "app/dashboard/orders/[id]/page.jsx", "app/dashboard/customers/page.jsx", "components/customers/CustomerTable.jsx", "app/dashboard/orders/page.jsx"  ],
+, "app/auth/layout.jsx", "components/products/ProductTable.jsx", "components/orders/OrderItemForm.jsx", "app/dashboard/orders/[id]/page.jsx", "app/dashboard/customers/page.jsx", "components/customers/CustomerTable.jsx", "app/dashboard/orders/page.jsx", "app/dashboard/orders/add/page.jsx", "app/dashboard/products/add/page.jsx", "app/dashboard/products/[id]/page.jsx"  ],
   "exclude": ["node_modules"]
 }

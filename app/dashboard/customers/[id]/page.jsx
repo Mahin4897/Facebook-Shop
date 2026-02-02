@@ -65,7 +65,7 @@ export default function CustomerPage() {
   }, [orders, currentPage]);
 
   const handleOrderClick = (orderId) => {
-    router.push(`/orders/${orderId}`);
+    router.push(`/dashboard/orders/${orderId}`);
   };
 
   return (

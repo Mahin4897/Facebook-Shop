@@ -181,7 +181,7 @@ export default function CustomersPage() {
 
   // Handle row click
   const handleCustomerClick = (customerId) => {
-    router.push(`/customers/${customerId}`);
+    router.push(`/dashboard/customers/${customerId}`);
   };
 
   // Handle view details click

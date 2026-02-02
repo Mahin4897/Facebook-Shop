@@ -116,7 +116,7 @@ export default function ProductTable({
 
   // Handle product click
   const handleProductClick = (productId) => {
-    router.push(`/products/${productId}`);
+    router.push(`/dashboard/products/${productId}`);
   };
 
   // Handle view details click
