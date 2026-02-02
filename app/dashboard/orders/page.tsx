@@ -7,14 +7,14 @@ import ThemeToggle from "@/components/ui/ThemeToggle";
 import Link from "next/link";
 import OrderTable from "@/components/orders/OrderTable";
 export type Order = {
-    id: number;
-    productName: string;
-    productImage: string;
-    customer: string;
-    total: number;
-    deliveryStatus: string;
-    date: string;
-}
+  id: number;
+  productName: string;
+  productImage: string;
+  customer: string;
+  total: number;
+  deliveryStatus: string;
+  date: string;
+};
 export default function OrdersPage() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState(""); // new filter state
@@ -59,9 +59,9 @@ export default function OrdersPage() {
 
   // Filter orders by delivery status
   const filteredOrders = orders.filter(
-    (o:Order) =>
+    (o: Order) =>
       o.customer.toLowerCase().includes(search.toLowerCase()) &&
-      (statusFilter === "" || o.deliveryStatus === statusFilter)
+      (statusFilter === "" || o.deliveryStatus === statusFilter),
   );
 
   return (
@@ -122,7 +122,11 @@ export default function OrdersPage() {
             stroke="currentColor"
             strokeWidth={2}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M12 4v16m8-8H4"
+            />
           </svg>
           Add Order
         </Link>
@@ -132,7 +136,7 @@ export default function OrdersPage() {
       <OrderTable
         orders={filteredOrders}
         search={search}
-        sort="asc" // or implement date sorting if needed
+        // or implement date sorting if needed
         loading={isLoading}
         r1="Product"
         r2="Customer"

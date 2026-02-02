@@ -55,7 +55,7 @@ export default function Sidebar({
           transition-all duration-300
           ${collapsed ? "w-20" : "w-72"}
           ${open ? "translate-x-0" : "-translate-x-full"}
-          md:static md:translate-x-0
+          md:sticky md:top-0 md:left-0 md:translate-x-0
           bg-(--card) border-r border-(--border)
         `}
       >

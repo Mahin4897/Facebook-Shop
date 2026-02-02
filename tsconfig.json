@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/auth/layout.jsx", "components/products/ProductTable.jsx"  ],
+, "app/auth/layout.jsx", "components/products/ProductTable.jsx", "components/orders/OrderItemForm.jsx", "app/dashboard/orders/[id]/page.jsx", "app/dashboard/customers/page.jsx", "components/customers/CustomerTable.jsx", "app/dashboard/orders/page.jsx"  ],
   "exclude": ["node_modules"]
 }

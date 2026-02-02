@@ -2,6 +2,8 @@
 
 import { useState, useMemo } from "react";
 import { v4 as uuid } from "uuid";
+import { useRouter } from "next/navigation";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 
 const MOCK_VARIANTS = [
   { id: 1, name: "Red / Large", price: 1200 , product_id:1, sku: "RED-L" },
@@ -11,23 +13,31 @@ const Mockproducts = [
   { id: 1, name: "T-Shirt" },
   { id: 2, name: "Hoodie" },
 ]
+const MOCK_CUSTOMERS = [
+  { id: "1", name: "John Doe", phone: "123456789", address: "123 Street" },
+  { id: "2", name: "Jane Smith", phone: "987654321", address: "456 Avenue" },
+];
 
 
 
-type Customer = {
-  id: number;
-  name: string;
-  phone: string;
-  address: string;
-};
 
 
 export default function AddOrderPage() {
-  const [customer, setCustomer] = useState<Customer | null>(null);
-  const [items, setItems] = useState<any[]>([]);
-  const [status, setStatus] = useState("Pending");
+  const router = useRouter();
 
-  const [showCustomerDrawer, setShowCustomerDrawer] = useState(false);
+  type OrderItem = {
+    product_id: number | string;
+    product_name: string;
+    variant_id: number | string;
+    variant_name: string;
+    price: number;
+    quantity: number;
+    id?: string;
+  };
+
+  const [customerId, setCustomerId] = useState<string | "">("");
+  const [items, setItems] = useState<OrderItem[]>([]);
+  const [status, setStatus] = useState("Pending");
   const [showItemDrawer, setShowItemDrawer] = useState(false);
 
   /** Total calculation */
@@ -36,79 +46,103 @@ export default function AddOrderPage() {
     [items]
   );
 
-  const addItem = (item: any) => {
+  const addItem = (item: OrderItem) => {
     setItems([...items, { ...item, id: uuid() }]);
-    setShowItemDrawer(false);
   };
+
+  const selectedCustomer = MOCK_CUSTOMERS.find((c) => c.id === customerId) || null;
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-6">
-      <h1 className="text-2xl font-bold">Create Order</h1>
+      <div className="flex justify-between items-center">
+        <h1 className="text-2xl font-bold">Create Order</h1>
+        <ThemeToggle />
+      </div>
 
       {/* Customer section */}
       <div className="rounded-2xl border p-6 bg-(--card)">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mb-3">
           <h2 className="font-semibold">Customer</h2>
           <button
-            onClick={() => setShowCustomerDrawer(true)}
+            onClick={() => router.push("/customers/add")}
             className="btn-primary"
           >
-            {customer ? "Change" : "+ Add"} Customer
+            + Add Customer
           </button>
         </div>
 
-        {customer && (
+        <select
+          value={customerId}
+          onChange={(e) => setCustomerId(e.target.value)}
+          className="w-full border rounded-md p-2 bg-(--card) text-(--text) border-(--border) focus:outline-none focus:ring-2 focus:ring-(--primary) transition"
+        >
+          <option value="">Select Customer</option>
+          {MOCK_CUSTOMERS.map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name} ({c.phone})
+            </option>
+          ))}
+        </select>
+
+        {selectedCustomer && (
           <div className="mt-4 text-sm">
-            <p><b>{customer.name}</b></p>
-            <p>{customer.phone}</p>
-            <p>{customer.address}</p>
+            <p><b>{selectedCustomer.name}</b></p>
+            <p>{selectedCustomer.phone}</p>
+            <p>{selectedCustomer.address}</p>
           </div>
         )}
       </div>
 
-{/* Order items */}
-<div className="rounded-2xl border p-6 bg-(--card)">
-  <div className="flex justify-between items-center mb-3">
-    <h2 className="font-semibold">Order Items</h2>
-    <button
-      onClick={() => setShowItemDrawer(true)}
-      className="btn-primary"
-    >
-      + Add Item
-    </button>
-  </div>
-
-  {items.length === 0 && (
-    <p className="text-sm text-(--muted)">No items added</p>
-  )}
-
-  {items.map((item) => (
-    <div
-      key={item.id}
-      className="flex justify-between items-center text-sm border-b py-2"
-    >
-      {/* Item info */}
-      <span>
-        {item!.product_name} ({item!.variant_name}) × {item.quantity}
-      </span>
-
-      {/* Price and remove button */}
-      <div className="flex items-center gap-3">
-        <span>৳ {item.price * item.quantity}</span>
-        <button
-          onClick={() =>
-            setItems(items.filter((i) => i.id !== item.id))
-          }
-          className="text-red-600 hover:text-red-800 font-bold text-lg"
-          title="Remove item"
+      {/* Status section */}
+      <div className="rounded-2xl border p-6 bg-(--card)">
+        <h2 className="font-semibold mb-2">Order Status</h2>
+        <select
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+          className="w-full border rounded-md p-2 bg-(--card) text-(--text) border-(--border) focus:outline-none focus:ring-2 focus:ring-(--primary) transition"
         >
-          &times; {/* This is a simple red cross */}
-        </button>
+          <option value="Pending">Pending</option>
+          <option value="Processing">Processing</option>
+          <option value="Completed">Completed</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
       </div>
-    </div>
-  ))}
-</div>
 
+      {/* Order items */}
+      <div className="rounded-2xl border p-6 bg-(--card)">
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="font-semibold">Order Items</h2>
+          <button onClick={() => setShowItemDrawer(true)} className="btn-primary">
+            + Add Item
+          </button>
+        </div>
+
+        {items.length === 0 && (
+          <p className="text-sm text-(--muted)">No items added</p>
+        )}
+
+        {items.map((item) => (
+          <div
+            key={item.id}
+            className="flex justify-between items-center text-sm border-b py-2"
+          >
+            <span>
+              {item.product_name} ({item.variant_name}) × {item.quantity}
+            </span>
+
+            <div className="flex items-center gap-3">
+              <span>৳ {item.price * item.quantity}</span>
+              <button
+                onClick={() => setItems(items.filter((i) => i.id !== item.id))}
+                className="text-red-600 hover:text-red-800 font-bold text-lg"
+                title="Remove item"
+              >
+                &times;
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
 
       {/* Total */}
       <div className="text-right text-lg font-bold">
@@ -119,29 +153,9 @@ export default function AddOrderPage() {
         Save Order
       </button>
 
-      {/* ================= DRAWERS ================= */}
-
-      {/* Customer Drawer */}
-      <Drawer
-        open={showCustomerDrawer}
-        onClose={() => setShowCustomerDrawer(false)}
-      >
-        <CustomerForm
-          onSave={(data: Customer) => {
-            setCustomer(data);
-            setShowCustomerDrawer(false);
-          }}
-        />
-      </Drawer>
-
       {/* Item Drawer */}
-      <Drawer
-        open={showItemDrawer}
-        onClose={() => setShowItemDrawer(false)}
-      >
-        <OrderItemForm onAdd={addItem} 
-        products={Mockproducts}
-        variants={MOCK_VARIANTS}/>
+      <Drawer open={showItemDrawer} onClose={() => setShowItemDrawer(false)}>
+        <OrderItemForm onAdd={addItem} products={Mockproducts} variants={MOCK_VARIANTS} />
       </Drawer>
     </div>
   );
@@ -171,48 +185,9 @@ function Drawer({ open, onClose, children }: DrawerProps) {
   );
 }
 
-interface CustomerFormProps {
-  onSave: (customer: Customer) => void;
-}
 
-function CustomerForm({ onSave }: CustomerFormProps) {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    address: "",
-  });
 
-  return (
-    <div className="space-y-4">
-      <h2 className="text-lg font-bold">Add Customer</h2>
 
-      <input
-        className="input"
-        placeholder="Name"
-        onChange={(e) => setForm({ ...form, name: e.target.value })}
-      />
-
-      <input
-        className="input"
-        placeholder="Phone"
-        onChange={(e) => setForm({ ...form, phone: e.target.value })}
-      />
-
-      <textarea
-        className="input"
-        placeholder="Address"
-        onChange={(e) => setForm({ ...form, address: e.target.value })}
-      />
-
-      <button
-        onClick={() => onSave({ ...form, id: Date.now() })}
-        className="w-full btn-primary"
-      >
-        Save Customer
-      </button>
-    </div>
-  );
-}
 type Product = {
   id: number | string;
   name: string;
@@ -233,7 +208,14 @@ function OrderItemForm({
 }: {
   products: Product[];
   variants: Variant[];
-  onAdd: (item: any) => void;
+  onAdd: (item: {
+    product_id: number | string;
+    product_name: string;
+    variant_id: number | string;
+    variant_name: string;
+    price: number;
+    quantity: number;
+  }) => void;
 }) {
   const [productId, setProductId] = useState< number | "">("");
   const [variant, setVariant] = useState<Variant | null>(null);
