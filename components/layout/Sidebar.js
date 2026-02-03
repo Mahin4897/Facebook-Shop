@@ -39,7 +39,7 @@ export default function Sidebar({
 
   return (
     <>
-      {/* Overlay */}
+      {/* Overlay - only on mobile when sidebar is open */}
       {open && (
         <div
           onClick={onClose}
@@ -47,16 +47,18 @@ export default function Sidebar({
         />
       )}
 
+      {/* Sidebar */}
       <aside
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
-        className={`fixed z-50 h-screen
+        className={`fixed md:sticky inset-y-0 left-0 z-50
           flex flex-col
-          transition-all duration-300
+          transition-transform duration-300 ease-in-out
           ${collapsed ? "w-20" : "w-72"}
           ${open ? "translate-x-0" : "-translate-x-full"}
-          md:sticky md:top-0 md:left-0 md:translate-x-0
+          md:translate-x-0
           bg-(--card) border-r border-(--border)
+          h-dvh md:h-screen
         `}
       >
         {/* Brand + Collapse Button */}
@@ -116,28 +118,27 @@ export default function Sidebar({
                   href={item.href}
                   onClick={onClose}
                   className={`
-    group relative
-    flex items-center rounded-xl px-4 py-3 text-sm font-medium
-    transition-all duration-200
-    ${collapsed ? "justify-center" : "gap-3"}
+                    group relative
+                    flex items-center rounded-xl px-4 py-3 text-sm font-medium
+                    transition-all duration-200
+                    ${collapsed ? "justify-center" : "gap-3"}
 
-    ${
-      active
-        ? `
-           
-            border border-blue-300
-            shadow-sm
-            dark:text-blue-500 dark:border-blue-800
-          `
-        : `
-            text-(--muted)
-            hover:bg-linear-to-r hover:from-blue-100 hover:to-indigo-100
-            hover:text-blue-800
-            hover:shadow-sm
-            dark:hover:bg-white/10 dark:hover:text-black
-          `
-    }
-  `}
+                    ${
+                      active
+                        ? `
+                            border border-blue-300
+                            shadow-sm
+                            dark:text-blue-500 dark:border-blue-800
+                          `
+                        : `
+                            text-(--muted)
+                            hover:bg-linear-to-r hover:from-blue-100 hover:to-indigo-100
+                            hover:text-blue-800
+                            hover:shadow-sm
+                            dark:hover:bg-white/10 dark:hover:text-black
+                          `
+                    }
+                  `}
                 >
                   {/* Active indicator */}
                   {active && !collapsed && (
@@ -146,13 +147,13 @@ export default function Sidebar({
 
                   <Icon
                     className={`
-      h-5 w-5 shrink-0 transition-all duration-200
-      ${
-        active
-          ? "text-blue-700 dark:text-blue-500"
-          : "group-hover:text-blue-700 dark:group-hover:text-blue-400"
-      }
-    `}
+                      h-5 w-5 shrink-0 transition-all duration-200
+                      ${
+                        active
+                          ? "text-blue-700 dark:text-blue-500"
+                          : "group-hover:text-blue-700 dark:group-hover:text-blue-400"
+                      }
+                    `}
                   />
 
                   {!collapsed && item.label}
