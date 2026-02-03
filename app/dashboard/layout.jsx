@@ -10,12 +10,11 @@ export default function DashboardLayout({ children }) {
 
   const user = {
     email: "shop@business.com",
-    role: "owner", // owner | staff
-    avatar: "", // optional image URL
+    role: "owner",
   };
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex h-screen overflow-hidden bg-(--bg)">
       <Sidebar
         user={user}
         open={sidebarOpen}
@@ -24,18 +23,9 @@ export default function DashboardLayout({ children }) {
         onToggleCollapse={() => setCollapsed((v) => !v)}
       />
 
-      {/* Main content */}
-      <div
-        className={`flex-1 flex flex-col min-h-screen w-full
-        ${collapsed ? "md:ml-20" : "md:ml-72"} transition-all duration-300`}
-      >
-        {/* Mobile header - only shown on mobile */}
-        <header
-          className="md:hidden sticky top-0 z-30
-          flex items-center justify-between border-b
-          border-(--border) bg-(--card)
-          px-4 py-3"
-        >
+      <div className="flex flex-1 flex-col overflow-hidden">
+        {/* Mobile header */}
+        <header className="flex items-center justify-between border-b border-(--border) bg-(--card) px-4 py-3 md:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
             className="rounded-lg border border-(--border) px-3 py-2"
@@ -45,10 +35,8 @@ export default function DashboardLayout({ children }) {
           <ThemeToggle />
         </header>
 
-        {/* Page content */}
-        <main className="flex-1 bg-(--bg) p-4 md:p-6 overflow-auto">
-          {children}
-        </main>
+        {/* ONLY CONTENT SCROLLS */}
+        <main className="flex-1 overflow-y-auto p-6">{children}</main>
       </div>
     </div>
   );
