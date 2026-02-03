@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import {
@@ -11,6 +11,8 @@ import {
   Package,
   ArrowRight,
   Edit,
+  Save,
+  X,
   Mail,
   ShoppingBag,
   DollarSign,
@@ -52,9 +54,11 @@ const PAGE_SIZE = 8;
 
 export default function CustomerPage() {
   const router = useRouter();
-  const [customer] = useState(MOCK_CUSTOMER);
+  const [customer, setCustomer] = useState(MOCK_CUSTOMER);
   const [orders] = useState(MOCK_ORDERS);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedCustomer, setEditedCustomer] = useState({ ...MOCK_CUSTOMER });
 
   // Calculate pagination
   const totalPages = Math.ceil(orders.length / PAGE_SIZE);
@@ -66,6 +70,37 @@ export default function CustomerPage() {
 
   const handleOrderClick = (orderId) => {
     router.push(`/dashboard/orders/${orderId}`);
+  };
+
+  const handleEditClick = () => {
+    setIsEditing(true);
+    setEditedCustomer({ ...customer });
+  };
+
+  const handleSaveClick = () => {
+    setCustomer({ ...editedCustomer });
+    setIsEditing(false);
+    // In a real app, you would also send an API request to update the customer data
+    console.log("Saving customer data:", editedCustomer);
+  };
+
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    setEditedCustomer({ ...customer });
+  };
+
+  const handleInputChange = (field, value) => {
+    setEditedCustomer((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
+
+  const handleStatusChange = (status) => {
+    setEditedCustomer((prev) => ({
+      ...prev,
+      status,
+    }));
   };
 
   return (
@@ -88,49 +123,157 @@ export default function CustomerPage() {
           <div className="space-y-6">
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="text-2xl font-bold flex items-center gap-3">
-                  <User className="h-6 w-6" />
-                  {customer.name}
-                </h2>
-                <div
-                  className={`inline-block px-3 py-1 rounded-full text-sm font-medium mt-2 ${
-                    customer.status === "active"
-                      ? "bg-green-100 text-green-800"
-                      : "bg-red-100 text-red-800"
-                  }`}
-                >
-                  {customer.status.charAt(0).toUpperCase() +
-                    customer.status.slice(1)}
-                </div>
+                {isEditing ? (
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-(--muted) mb-1">
+                        Customer Name
+                      </label>
+                      <input
+                        type="text"
+                        value={editedCustomer.name}
+                        onChange={(e) =>
+                          handleInputChange("name", e.target.value)
+                        }
+                        className="w-full max-w-md px-4 py-2 border border-(--border) rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Enter customer name"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-(--muted) mb-1">
+                        Status
+                      </label>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleStatusChange("active")}
+                          className={`px-4 py-2 rounded-xl border ${
+                            editedCustomer.status === "active"
+                              ? "bg-green-100 text-green-800 border-green-300"
+                              : "border-(--border) hover:bg-(--muted/10)"
+                          }`}
+                        >
+                          Active
+                        </button>
+                        <button
+                          onClick={() => handleStatusChange("inactive")}
+                          className={`px-4 py-2 rounded-xl border ${
+                            editedCustomer.status === "inactive"
+                              ? "bg-red-100 text-red-800 border-red-300"
+                              : "border-(--border) hover:bg-(--muted/10)"
+                          }`}
+                        >
+                          Inactive
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <h2 className="text-2xl font-bold flex items-center gap-3">
+                      <User className="h-6 w-6" />
+                      {customer.name}
+                    </h2>
+                    <div
+                      className={`inline-block px-3 py-1 rounded-full text-sm font-medium mt-2 ${
+                        customer.status === "active"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-red-100 text-red-800"
+                      }`}
+                    >
+                      {customer.status.charAt(0).toUpperCase() +
+                        customer.status.slice(1)}
+                    </div>
+                  </>
+                )}
               </div>
-              <button className="flex items-center gap-2 px-4 py-2 border border-(--border) rounded-xl hover:bg-(--muted/10) transition">
-                <Edit className="h-4 w-4" />
-                Edit
-              </button>
+              <div className="flex gap-2">
+                {isEditing ? (
+                  <>
+                    <button
+                      onClick={handleSaveClick}
+                      className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-xl hover:bg-green-700 transition"
+                    >
+                      <Save className="h-4 w-4" />
+                      Save
+                    </button>
+                    <button
+                      onClick={handleCancelClick}
+                      className="flex items-center gap-2 px-4 py-2 border border-(--border) rounded-xl hover:bg-(--muted/10) transition"
+                    >
+                      <X className="h-4 w-4" />
+                      Cancel
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={handleEditClick}
+                    className="flex items-center gap-2 px-4 py-2 border border-(--border) rounded-xl hover:bg-(--muted/10) transition"
+                  >
+                    <Edit className="h-4 w-4" />
+                    Edit
+                  </button>
+                )}
+              </div>
             </div>
 
             <div className="space-y-4">
               <div className="flex items-center gap-3">
                 <Mail className="h-5 w-5 text-(--muted)" />
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-(--muted)">Email</p>
-                  <p className="font-medium">{customer.email}</p>
+                  {isEditing ? (
+                    <input
+                      type="email"
+                      value={editedCustomer.email}
+                      onChange={(e) =>
+                        handleInputChange("email", e.target.value)
+                      }
+                      className="w-full px-3 py-1 border border-(--border) rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter email address"
+                    />
+                  ) : (
+                    <p className="font-medium">{customer.email}</p>
+                  )}
                 </div>
               </div>
 
               <div className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-(--muted)" />
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-(--muted)">Phone</p>
-                  <p className="font-medium">{customer.phone}</p>
+                  {isEditing ? (
+                    <input
+                      type="tel"
+                      value={editedCustomer.phone}
+                      onChange={(e) =>
+                        handleInputChange("phone", e.target.value)
+                      }
+                      className="w-full px-3 py-1 border border-(--border) rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter phone number"
+                    />
+                  ) : (
+                    <p className="font-medium">{customer.phone}</p>
+                  )}
                 </div>
               </div>
 
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-(--muted) mt-1" />
-                <div>
+                <div className="flex-1">
                   <p className="text-sm text-(--muted)">Address</p>
-                  <p className="font-medium">{customer.address}</p>
+                  {isEditing ? (
+                    <textarea
+                      value={editedCustomer.address}
+                      onChange={(e) =>
+                        handleInputChange("address", e.target.value)
+                      }
+                      className="w-full px-3 py-2 border border-(--border) rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="Enter address"
+                      rows="2"
+                    />
+                  ) : (
+                    <p className="font-medium">{customer.address}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -240,7 +383,10 @@ export default function CustomerPage() {
                         </td>
                         <td className="p-4">
                           <span
-                            className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_COLORS[order.status] || "bg-gray-100 text-gray-800"}`}
+                            className={`px-3 py-1 rounded-full text-sm font-medium ${
+                              STATUS_COLORS[order.status] ||
+                              "bg-gray-100 text-gray-800"
+                            }`}
                           >
                             {order.status.charAt(0).toUpperCase() +
                               order.status.slice(1)}
