@@ -10,11 +10,36 @@
 
 /* DARK */
 .dark {
-  --bg: #020617;
-  --card: #020617;
+  --bg: #020617; /* page background */
+  --card: #02091a; /* cards & drawers */
   --text: #f8fafc;
   --muted: #94a3b8;
   --border: #1e293b;
+}
+
+.dark .shadow-md,
+.dark .shadow-lg {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+/* ===================== */
+/* THEME UTILITIES */
+/* ===================== */
+
+.bg-card {
+  background-color: var(--card);
+}
+
+.bg-surface {
+  background-color: var(--bg);
+}
+
+.text-muted {
+  color: var(--muted);
+}
+
+.border-theme {
+  border-color: var(--border);
 }
 
 /* ===================== */
