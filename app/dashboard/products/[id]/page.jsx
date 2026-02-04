@@ -18,7 +18,6 @@ import {
   Save,
   X,
   Check,
-  Star,
   Box,
   Ruler,
 } from "lucide-react";
@@ -69,12 +68,6 @@ export default function ProductPage() {
       stock: 20,
     },
   ]);
-
-  // Calculate profit margin
-  const profitMargin = (
-    ((product.base_price - product.cost_price) / product.base_price) *
-    100
-  ).toFixed(1);
 
   /* ================= IMAGE HANDLERS ================= */
 

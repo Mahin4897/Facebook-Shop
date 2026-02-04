@@ -25,7 +25,7 @@ import {
 function StockBadge({ stock }) {
   if (stock > 20) {
     return (
-      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 dark:bg-green-900/40 dark:text-green-300">
+      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-green-800 text-green-400 dark:bg-green-800 dark:text-green-400">
         <CheckCircle className="h-3 w-3 mr-1" />
         {stock}
       </span>
@@ -33,14 +33,14 @@ function StockBadge({ stock }) {
   }
   if (stock > 0) {
     return (
-      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-700 dark:bg-yellow-900/40 dark:text-yellow-300">
+      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-yellow-500 text-yellow-700 dark:bg-yellow-500 dark:text-yellow-700">
         <AlertTriangle className="h-3 w-3 mr-1" />
         {stock}
       </span>
     );
   }
   return (
-    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 dark:bg-red-900/40 dark:text-red-300">
+    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-red-900 text-red-300 dark:bg-red-900 dark:text-red-300">
       <XCircle className="h-3 w-3 mr-1" />
       Out
     </span>

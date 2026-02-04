@@ -56,8 +56,8 @@ const StatusBadge = ({ status }) => (
   <span
     className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${
       status === "active"
-        ? "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300"
-        : "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300"
+        ? "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100"
+        : "bg-red-100 text-red-800 dark:bg-red-100 dark:text-red-800"
     }`}
   >
     {status === "active" ? (
