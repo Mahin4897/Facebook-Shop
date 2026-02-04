@@ -78,7 +78,9 @@ export default function ExpenseListPage() {
               <tr
                 key={e.id}
                 className="border-t border-theme hover:transform hover:scale-101 transition cursor-pointer"
-                onClick={() => (window.location.href = `/expenses/${e.id}`)}
+                onClick={() =>
+                  (window.location.href = `/dashboard/expenses/${e.id}`)
+                }
               >
                 <td className="px-4 py-3 font-medium">{e.name}</td>
                 <td className="px-4 py-3">{e.category}</td>

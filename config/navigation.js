@@ -3,7 +3,7 @@ import {
   ShoppingCart,
   Package,
   Users,
-  FileText,
+  //FileText,
   Wallet,
   BarChart3,
   Settings,
@@ -34,12 +34,12 @@ export const NAV_ITEMS = [
     icon: Users,
     roles: ["owner", "staff"],
   },
-  {
-    label: "Invoices",
-    href: "/dashboard/invoices",
-    icon: FileText,
-    roles: ["owner"],
-  },
+  // {
+  //   label: "Invoices",
+  //   href: "/dashboard/invoices",
+  //   icon: FileText,
+  //   roles: ["owner"],
+  // },
   {
     label: "Expenses",
     href: "/dashboard/expenses",

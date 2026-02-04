@@ -123,8 +123,12 @@ export default function Sidebar({
                     ${collapsed ? "justify-center" : "gap-3"}
                     ${
                       active
-                        ? "border border-blue-300 shadow-sm dark:border-blue-800"
-                        : "text-(--muted) hover:bg-black/5 dark:hover:bg-white/10"
+                        ? "border border-blue-800 shadow-sm dark:border-blue-800"
+                        : `text-(--muted)
+            hover:bg-linear-to-r hover:from-blue-100 hover:to-indigo-100
+            hover:text-blue-800
+            hover:shadow-sm
+            dark:hover:bg-white/10 dark:hover:text-black`
                     }
                   `}
               >
