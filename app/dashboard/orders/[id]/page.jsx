@@ -313,7 +313,7 @@ export default function OrderDetailPage() {
       </div>
 
       {/* ================= CUSTOMER CARD WITH SELECT ================= */}
-      <div className="rounded-2xl border p-8 bg-(--card) shadow-sm">
+      <div className="rounded-2xl border p-8 border-theme shadow-sm">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Customer Basic Info */}
           <div className="space-y-6">
@@ -392,7 +392,7 @@ export default function OrderDetailPage() {
               </h3>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="rounded-xl border p-4 bg-(--muted/5)">
+                <div className="rounded-xl border p-4 border-theme ">
                   <div className="flex items-center gap-2 mb-2">
                     <ShoppingBag className="h-4 w-4 text-(--muted)" />
                     <p className="text-sm text-(--muted)">Total Orders</p>
@@ -402,7 +402,7 @@ export default function OrderDetailPage() {
                   </p>
                 </div>
 
-                <div className="rounded-xl border p-4 bg-(--muted/5)">
+                <div className="rounded-xl border p-4 border-theme">
                   <div className="flex items-center gap-2 mb-2">
                     <DollarSign className="h-4 w-4 text-(--muted)" />
                     <p className="text-sm text-(--muted)">Total Spent</p>
@@ -412,7 +412,7 @@ export default function OrderDetailPage() {
                   </p>
                 </div>
 
-                <div className="rounded-xl border p-4 bg-(--muted/5) col-span-2">
+                <div className="rounded-xl border p-4 border-theme col-span-2">
                   <div className="flex items-center gap-2 mb-2">
                     <Calendar className="h-4 w-4 text-(--muted)" />
                     <p className="text-sm text-(--muted)">Customer Since</p>
@@ -425,7 +425,7 @@ export default function OrderDetailPage() {
             </div>
 
             {/* Customer Status */}
-            <div className="rounded-xl border p-4 bg-(--muted/5)">
+            <div className="rounded-xl border p-4 border-theme">
               <p className="text-sm text-(--muted) mb-2">Customer Status</p>
               <div
                 className={`inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium ${
@@ -454,7 +454,7 @@ export default function OrderDetailPage() {
       {/* ================= EDITABLE ORDER INFO CARD ================= */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Order Details Card - Now Editable */}
-        <div className="rounded-2xl border p-6 bg-(--card) md:col-span-2">
+        <div className="rounded-2xl border p-6 border-theme md:col-span-2">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-xl font-semibold flex items-center gap-2">
               <Package className="h-5 w-5" />
@@ -667,7 +667,7 @@ export default function OrderDetailPage() {
         </div>
 
         {/* Order Summary Card */}
-        <div className="rounded-2xl border p-6 bg-(--card)">
+        <div className="rounded-2xl border p-6 border-theme">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <DollarSign className="h-5 w-5" />
             Order Summary
@@ -708,7 +708,7 @@ export default function OrderDetailPage() {
       </div>
 
       {/* ================= ORDER ITEMS ================= */}
-      <div className="rounded-2xl border p-6 bg-(--card)">
+      <div className="rounded-2xl border p-6 border-theme ">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold">Order Items</h2>
           <button
@@ -733,7 +733,7 @@ export default function OrderDetailPage() {
           {paginatedItems.map((item) => (
             <div
               key={item.id}
-              className="flex justify-between items-center p-4 rounded-xl border hover:bg-(--muted/5) transition"
+              className="flex justify-between items-center p-4 rounded-xl border border-theme hover:bg-(--muted/5) transition"
             >
               <div>
                 <p className="font-medium">

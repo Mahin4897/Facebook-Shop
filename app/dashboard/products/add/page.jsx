@@ -40,7 +40,7 @@ export default function AddProductPage() {
 
   // Field styling
   const fieldClass =
-    "w-full px-4 py-3 rounded-xl border bg-(--card) text-(--text) border-(--border) focus:outline-none focus:ring-2 focus:ring-blue-500 transition";
+    "w-full px-4 py-3 rounded-xl border  text-(--text) border-theme focus:outline-none focus:ring-2 focus:ring-blue-500 transition";
   const labelClass = "block text-sm font-medium mb-2 text-(--text)";
 
   // Handle file upload
@@ -148,7 +148,7 @@ export default function AddProductPage() {
           {/* Left Column - Basic Info */}
           <div className="lg:col-span-2 space-y-8">
             {/* Basic Information Card */}
-            <div className="rounded-2xl border p-6 bg-(--card)">
+            <div className="rounded-2xl border p-6 border-theme">
               <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                 <Package className="h-5 w-5" />
                 Basic Information
@@ -272,7 +272,7 @@ export default function AddProductPage() {
             </div>
 
             {/* Images Section */}
-            <div className="rounded-2xl border p-6 bg-(--card)">
+            <div className="rounded-2xl border p-6 border-theme">
               <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                 <ImageIcon className="h-5 w-5" />
                 Product Images
@@ -338,7 +338,7 @@ export default function AddProductPage() {
           {/* Right Column - Pricing & Variants */}
           <div className="space-y-8">
             {/* Pricing Card */}
-            <div className="rounded-2xl border p-6 bg-(--card)">
+            <div className="rounded-2xl border p-6 border-theme">
               <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                 <DollarSign className="h-5 w-5" />
                 Pricing
@@ -391,7 +391,7 @@ export default function AddProductPage() {
                 </div>
 
                 {/* Profit Margin */}
-                <div className="p-3 rounded-xl bg-(--muted/5) border">
+                <div className="p-3 rounded-xl border border-theme">
                   <p className="text-sm text-(--muted) mb-1">Profit Margin</p>
                   <p
                     className={`text-lg font-bold ${profitMargin > 0 ? "text-green-600" : "text-red-600"}`}
@@ -406,7 +406,7 @@ export default function AddProductPage() {
             </div>
 
             {/* Variants Card */}
-            <div className="rounded-2xl border p-6 bg-(--card)">
+            <div className="rounded-2xl border p-6 border-theme">
               <div className="flex justify-between items-center mb-6">
                 <h2 className="text-xl font-semibold flex items-center gap-2">
                   <Layers className="h-5 w-5" />
@@ -488,7 +488,7 @@ export default function AddProductPage() {
             </div>
 
             {/* Additional Information */}
-            <div className="rounded-2xl border p-6 bg-(--card)">
+            <div className="rounded-2xl border p-6 border-theme">
               <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
                 <Info className="h-5 w-5" />
                 Additional Information

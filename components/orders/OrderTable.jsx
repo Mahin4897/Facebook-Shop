@@ -148,7 +148,7 @@ export default function OrderTable({
   return (
     <div className="space-y-4">
       {/* ===================== DESKTOP TABLE ===================== */}
-      <div className="hidden md:block rounded-2xl bg-(--card) shadow-sm overflow-hidden">
+      <div className="hidden md:block rounded-2xl border border-theme shadow-sm overflow-hidden">
         <table className="w-full">
           <thead className="bg-(--muted/20) sticky top-0 z-10">
             <tr>
@@ -318,7 +318,7 @@ export default function OrderTable({
             <div
               key={o.id}
               onClick={() => handleRowClick(o.id)}
-              className="rounded-2xl bg-(--card) p-4 shadow-sm transition-transform duration-150 hover:scale-[1.01]"
+              className="rounded-2xl  border border-theme  p-4 shadow-sm transition-transform duration-150 hover:scale-[1.01]"
             >
               <div className="flex items-center gap-3">
                 <div className="h-12 w-12 rounded-lg bg-linear-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white overflow-hidden">

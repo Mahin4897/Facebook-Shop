@@ -4,26 +4,14 @@ import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import {
-  UserPlus,
   ShoppingBag,
-  Package,
-  DollarSign,
-  Hash,
   X,
   Plus,
-  Save,
   Truck,
   CheckCircle,
   Clock,
   AlertCircle,
-  Calendar,
-  MapPin,
-  CreditCard,
-  Edit,
-  Check,
 } from "lucide-react";
-import Drawer from "@/components/ui/Drawer";
-import OrderItemForm from "@/components/orders/OrderItemForm";
 
 // Mock Data
 const MOCK_VARIANTS = [
@@ -103,6 +91,7 @@ export default function AddOrderPage() {
   const [showItemDrawer, setShowItemDrawer] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [notes, setNotes] = useState("");
+  const [itemIdCounter, setItemIdCounter] = useState(0);
 
   const selectedCustomer =
     MOCK_CUSTOMERS.find((c) => c.id.toString() === customerId) || null;
@@ -120,11 +109,11 @@ export default function AddOrderPage() {
   const grandTotal = totalAmount + shippingFee + tax;
 
   const addItem = (item) => {
-    const newItem = { ...item, id: Date.now() };
+    const newItem = { ...item, id: itemIdCounter, quantity: 1 };
     setItems([...items, newItem]);
+    setItemIdCounter(itemIdCounter + 1);
     setShowItemDrawer(false);
   };
-
   const removeItem = (id) => setItems(items.filter((i) => i.id !== id));
   const updateQuantity = (id, qty) => {
     if (qty < 1) return;
@@ -138,7 +127,7 @@ export default function AddOrderPage() {
   };
 
   const fieldClass =
-    "w-full px-4 py-3 rounded-xl border bg-card dark:bg-gray-800 text-foreground dark:text-white border-border dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary transition";
+    "w-full px-4 py-3 rounded-xl border bg-card dark:bg-gray-800 text-foreground dark:text-(--muted) border-border dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary transition";
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
@@ -157,7 +146,7 @@ export default function AddOrderPage() {
         {/* Customer & Status */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-3">
-            <label className="block text-sm font-medium text-muted">
+            <label className="block text-sm font-medium text-(--muted)">
               Select Customer
             </label>
             <select
@@ -182,7 +171,7 @@ export default function AddOrderPage() {
           </div>
 
           <div className="space-y-3">
-            <label className="block text-sm font-medium text-muted">
+            <label className="block text-sm font-medium text-(--muted)">
               Order Status
             </label>
             <select
@@ -235,6 +224,7 @@ export default function AddOrderPage() {
                   </div>
                   <div className="flex items-center gap-2">
                     <button
+                      type="button"
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       className="px-2 py-1 border rounded hover:bg-muted/5"
                     >
@@ -242,6 +232,7 @@ export default function AddOrderPage() {
                     </button>
                     <span className="w-6 text-center">{item.quantity}</span>
                     <button
+                      type="button"
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       className="px-2 py-1 border rounded hover:bg-muted/5"
                     >
@@ -329,13 +320,49 @@ export default function AddOrderPage() {
       </form>
 
       {/* Drawer */}
-      <Drawer open={showItemDrawer} onClose={() => setShowItemDrawer(false)}>
-        <OrderItemForm
-          onAdd={addItem}
-          products={MOCK_PRODUCTS}
-          variants={MOCK_VARIANTS}
-        />
-      </Drawer>
+      {showItemDrawer && (
+        <div className="fixed inset-0 bg-black/40 z-50 flex justify-end">
+          <div className="w-full max-w-md bg-card p-6 h-full overflow-y-auto">
+            <div className="flex justify-between mb-4">
+              <h2 className="text-xl font-semibold">Add Product</h2>
+              <button onClick={() => setShowItemDrawer(false)}>
+                <X />
+              </button>
+            </div>
+
+            {MOCK_PRODUCTS.map((product) => (
+              <div key={product.id} className="space-y-2 mb-4">
+                <p className="font-medium">{product.name}</p>
+                {MOCK_VARIANTS.filter((v) => v.product_id === product.id).map(
+                  (v) => (
+                    <div
+                      key={v.id}
+                      className="flex justify-between items-center p-2 bg-muted/5 rounded-lg"
+                    >
+                      <div>
+                        <p className="text-sm">{v.name}</p>
+                        <p className="text-xs text-muted">৳ {v.price}</p>
+                      </div>
+                      <button
+                        onClick={() =>
+                          addItem({
+                            product_name: product.name,
+                            variant_name: v.name,
+                            price: v.price,
+                          })
+                        }
+                        className="bg-blue-600 text-white px-3 py-1 rounded-lg"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  ),
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

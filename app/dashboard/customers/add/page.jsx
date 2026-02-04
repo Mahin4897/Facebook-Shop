@@ -133,7 +133,7 @@ export default function AddCustomerPage() {
 
   // Field styles
   const fieldClass =
-    "w-full px-4 py-3 rounded-xl border bg-(--card) text-(--text) border-(--border) focus:outline-none focus:ring-2 focus:ring-blue-500 transition";
+    "w-full px-4 py-3 rounded-xl border border-theme text-(--text) border-(--border) focus:outline-none focus:ring-2 focus:ring-blue-500 transition";
   const labelClass = "block text-sm font-medium mb-2 text-(--text)";
   const errorClass = "mt-1 text-sm text-red-600";
 
@@ -165,7 +165,7 @@ export default function AddCustomerPage() {
       </div>
 
       {/* Main Form */}
-      <div className="rounded-3xl border bg-(--card) p-8">
+      <div className="rounded-3xl border border-theme p-8">
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Customer Type Selection */}
           <div className="space-y-4">
@@ -481,15 +481,15 @@ export default function AddCustomerPage() {
 
       {/* Quick Stats */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="rounded-xl border p-4 bg-(--card)">
+        <div className="rounded-xl border p-4 border-theme bg-(--card)">
           <p className="text-sm text-(--muted)">Total Customers</p>
           <p className="text-2xl font-bold">1,247</p>
         </div>
-        <div className="rounded-xl border p-4 bg-(--card)">
+        <div className="rounded-xl border p-4 border-theme bg-(--card)">
           <p className="text-sm text-(--muted)">Active This Month</p>
           <p className="text-2xl font-bold">84</p>
         </div>
-        <div className="rounded-xl border p-4 bg-(--card)">
+        <div className="rounded-xl border p-4 border-theme bg-(--card)">
           <p className="text-sm text-(--muted)">Avg. Orders per Customer</p>
           <p className="text-2xl font-bold">3.2</p>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import {
@@ -137,8 +137,8 @@ export default function CustomersPage() {
       </div>
 
       {/* ---------------- SEARCH ---------------- */}
-      <div className="relative max-w-md">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-(--muted)" />
+      <div className="relative max-w-md border border-theme rounded-xl mt-6 mb-4">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-(--muted) " />
         <input
           value={search}
           onChange={(e) => {
@@ -151,7 +151,7 @@ export default function CustomersPage() {
       </div>
 
       {/* ===================== DESKTOP TABLE ===================== */}
-      <div className="hidden md:block rounded-2xl bg-(--card) shadow-sm overflow-hidden">
+      <div className="hidden md:block rounded-2xl border border-theme shadow-sm overflow-hidden">
         <table className="w-full">
           <thead className="sticky top-0 bg-(--muted/20) z-10">
             <tr>
@@ -254,7 +254,7 @@ export default function CustomersPage() {
           <div
             key={c.id}
             onClick={() => router.push(`/dashboard/customers/${c.id}`)}
-            className="rounded-2xl bg-(--card) p-4 shadow-sm hover:scale-[1.01] transition"
+            className="rounded-2xl border border-theme p-4 shadow-sm hover:scale-[1.01] transition"
           >
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-lg bg-linear-to-br from-blue-500 to-purple-600 text-white flex items-center justify-center font-semibold">

@@ -152,71 +152,12 @@ export default function ProductPage() {
         </div>
       </div>
 
-      {/* Product Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="rounded-2xl border p-6 bg-(--card)">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-(--muted)">Selling Price</p>
-              <p className="text-2xl font-bold">৳ {product.base_price}</p>
-            </div>
-            <div className="p-3 rounded-full bg-blue-100">
-              <DollarSign className="h-6 w-6 text-blue-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border p-6 bg-(--card)">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-(--muted)">Stock Available</p>
-              <p className="text-2xl font-bold">{product.stock}</p>
-            </div>
-            <div className="p-3 rounded-full bg-green-100">
-              <Layers className="h-6 w-6 text-green-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border p-6 bg-(--card)">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-(--muted)">Profit Margin</p>
-              <p className="text-2xl font-bold text-green-600">
-                {profitMargin}%
-              </p>
-            </div>
-            <div className="p-3 rounded-full bg-purple-100">
-              <Tag className="h-6 w-6 text-purple-600" />
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-2xl border p-6 bg-(--card)">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-(--muted)">Rating</p>
-              <div className="flex items-center gap-1">
-                <p className="text-2xl font-bold">{product.rating}</p>
-                <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-                <span className="text-sm text-(--muted)">
-                  ({product.reviews})
-                </span>
-              </div>
-            </div>
-            <div className="p-3 rounded-full bg-yellow-100">
-              <Star className="h-6 w-6 text-yellow-600" />
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Left Column - Images & Basic Info */}
         <div className="lg:col-span-2 space-y-8">
           {/* Image Gallery */}
-          <div className="rounded-2xl border p-6 bg-(--card)">
+          <div className="rounded-2xl border p-6 bg-(--card) border-theme">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold flex items-center gap-2">
                 <Camera className="h-5 w-5" />
@@ -247,7 +188,7 @@ export default function ProductPage() {
                             i === 0 ? product.images.length - 1 : i - 1,
                           )
                         }
-                        className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition"
+                        className="absolute left-4 top-1/2 -translate-y-1/2 p-3 bg-(--card) backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition"
                       >
                         <ChevronLeft className="h-5 w-5" />
                       </button>
@@ -257,7 +198,7 @@ export default function ProductPage() {
                             i === product.images.length - 1 ? 0 : i + 1,
                           )
                         }
-                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition"
+                        className="absolute right-4 top-1/2 -translate-y-1/2 p-3 bg-(--card) backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition"
                       >
                         <ChevronRight className="h-5 w-5" />
                       </button>
@@ -323,7 +264,7 @@ export default function ProductPage() {
           </div>
 
           {/* Product Description */}
-          <div className="rounded-2xl border p-6 bg-(--card)">
+          <div className="rounded-2xl border p-6 bg-(--card) border-theme">
             <h2 className="text-xl font-semibold mb-4">Description</h2>
             <EditableTextArea
               value={product.description}
@@ -337,7 +278,7 @@ export default function ProductPage() {
         {/* Right Column - Product Details */}
         <div className="space-y-8">
           {/* Product Information */}
-          <div className="rounded-2xl border p-6 bg-(--card)">
+          <div className="rounded-2xl border p-6 bg-(--card) border-theme">
             <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
               <Package className="h-5 w-5" />
               Product Information
@@ -357,29 +298,32 @@ export default function ProductPage() {
                 icon={Hash}
                 onSave={(value) => setProduct({ ...product, sku: value })}
               />
+              <div className="grid grid-cols-1 gap-4">
+                <div className="w-full">
+                  <EditableField
+                    label="Base Price"
+                    value={product.base_price}
+                    prefix="৳ "
+                    icon={DollarSign}
+                    type="number"
+                    onSave={(value) =>
+                      setProduct({ ...product, base_price: Number(value) })
+                    }
+                  />
+                </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <EditableField
-                  label="Base Price"
-                  value={product.base_price}
-                  prefix="৳ "
-                  icon={DollarSign}
-                  type="number"
-                  onSave={(value) =>
-                    setProduct({ ...product, base_price: Number(value) })
-                  }
-                />
-
-                <EditableField
-                  label="Cost Price"
-                  value={product.cost_price}
-                  prefix="৳ "
-                  icon={DollarSign}
-                  type="number"
-                  onSave={(value) =>
-                    setProduct({ ...product, cost_price: Number(value) })
-                  }
-                />
+                <div className="w-full">
+                  <EditableField
+                    label="Cost Price"
+                    value={product.cost_price}
+                    prefix="৳ "
+                    icon={DollarSign}
+                    type="number"
+                    onSave={(value) =>
+                      setProduct({ ...product, cost_price: Number(value) })
+                    }
+                  />
+                </div>
               </div>
 
               <EditableField
@@ -419,7 +363,7 @@ export default function ProductPage() {
           </div>
 
           {/* Product Tags */}
-          <div className="rounded-2xl border p-6 bg-(--card)">
+          <div className="rounded-2xl border p-6 bg-(--card) border-theme">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-semibold flex items-center gap-2">
                 <Tag className="h-5 w-5" />
@@ -471,7 +415,7 @@ export default function ProductPage() {
           </div>
 
           {/* Variants Section */}
-          <div className="rounded-2xl border p-6 bg-(--card)">
+          <div className="rounded-2xl border p-6 bg-(--card) border-theme">
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-semibold flex items-center gap-2">
                 <Layers className="h-5 w-5" />
@@ -499,7 +443,7 @@ export default function ProductPage() {
                 {variants.map((variant) => (
                   <div
                     key={variant.id}
-                    className="flex items-center justify-between p-4 rounded-xl border hover:bg-(--muted/5) transition group"
+                    className="flex items-center justify-between p-4 rounded-xl border  border-theme hover:bg-(--muted/5) transition group"
                   >
                     <div>
                       <div className="flex items-center gap-2">
@@ -543,7 +487,7 @@ export default function ProductPage() {
       </div>
 
       {/* Additional Info Section - Moved up to reduce empty space */}
-      <div className="rounded-2xl border p-6 bg-(--card) mt-8">
+      <div className="rounded-2xl border p-6 bg-(--card) border-theme mt-8">
         <h2 className="text-xl font-semibold mb-6">Additional Information</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <EditableField
@@ -702,7 +646,7 @@ function VariantForm({ variant, onSave }) {
       </div>
 
       {/* Preview */}
-      <div className="p-4 rounded-xl border space-y-2">
+      <div className="p-4 rounded-xl border border-theme space-y-2">
         <h4 className="font-medium">Preview</h4>
         <div className="flex items-center justify-between">
           <span className="text-(--muted)">Variant:</span>
@@ -732,8 +676,6 @@ function VariantForm({ variant, onSave }) {
     </form>
   );
 }
-
-// Enhanced EditableField Component
 function EditableField({
   label,
   value,
@@ -763,13 +705,13 @@ function EditableField({
       </label>
 
       {editing ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full min-w-0">
           {Icon && <Icon className="h-5 w-5 text-(--muted)" />}
           {type === "select" ? (
             <select
               value={tempValue}
               onChange={(e) => setTempValue(e.target.value)}
-              className="flex-1 px-4 py-2 rounded-xl border bg-(--card) border-(--border)"
+              className="flex-1 min-w-0 px-4 py-2 rounded-xl border bg-(--card) border-theme focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               {options.map((option) => (
                 <option key={option} value={option}>
@@ -786,7 +728,7 @@ function EditableField({
                   type === "number" ? Number(e.target.value) : e.target.value,
                 )
               }
-              className="flex-1 px-4 py-2 rounded-xl border bg-(--card) border-(--border)"
+              className="flex-1 min-w-0 px-4 py-2 rounded-xl border bg-(--card) border-theme focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           )}
           <div className="flex items-center gap-1">
@@ -806,12 +748,12 @@ function EditableField({
         </div>
       ) : (
         <div
-          className="flex items-center justify-between p-3 rounded-xl border hover:bg-(--muted/5) transition cursor-pointer group"
+          className="flex items-center justify-between p-3 rounded-xl border border-theme hover:bg-(--muted/5) transition cursor-pointer group w-full min-w-0"
           onClick={() => setEditing(true)}
         >
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 min-w-0 overflow-hidden">
             {Icon && <Icon className="h-5 w-5 text-(--muted)" />}
-            <span className="font-medium">
+            <span className="font-medium truncate">
               {prefix}
               {value}
             </span>
@@ -822,8 +764,6 @@ function EditableField({
     </div>
   );
 }
-
-// EditableTextArea Component
 function EditableTextArea({ value, onSave, placeholder, rows = 3 }) {
   const [editing, setEditing] = useState(false);
   const [tempValue, setTempValue] = useState(value);
@@ -839,14 +779,14 @@ function EditableTextArea({ value, onSave, placeholder, rows = 3 }) {
   };
 
   return (
-    <div className="relative group">
+    <div className="relative group w-full min-w-0">
       {editing ? (
-        <div className="space-y-3">
+        <div className="space-y-3 w-full min-w-0">
           <textarea
             value={tempValue}
             onChange={(e) => setTempValue(e.target.value)}
             rows={rows}
-            className="w-full px-4 py-3 rounded-xl border bg-(--card) border-(--border) focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full min-w-0 px-4 py-3 rounded-xl border bg-(--card) border-theme focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
             placeholder={placeholder}
           />
           <div className="flex justify-end gap-2">
@@ -854,33 +794,25 @@ function EditableTextArea({ value, onSave, placeholder, rows = 3 }) {
               onClick={handleSave}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition"
             >
-              <Check className="h-4 w-4" />
-              Save
+              <Check className="h-4 w-4" /> Save
             </button>
             <button
               onClick={handleCancel}
-              className="flex items-center gap-2 px-4 py-2 border border-(--border) rounded-xl hover:bg-(--muted/10) transition"
+              className="flex items-center gap-2 px-4 py-2 border border-theme rounded-xl hover:bg-(--muted/10) transition"
             >
-              <X className="h-4 w-4" />
-              Cancel
+              <X className="h-4 w-4" /> Cancel
             </button>
           </div>
         </div>
       ) : (
-        <>
-          <div
-            className="p-4 rounded-xl border hover:bg-(--muted/5) transition cursor-pointer"
-            onClick={() => setEditing(true)}
-          >
-            <p className="text-(--text) whitespace-pre-line">{value}</p>
-          </div>
-          <button
-            onClick={() => setEditing(true)}
-            className="absolute top-4 right-4 p-2 bg-white dark:bg-gray-800 border rounded-lg opacity-0 group-hover:opacity-100 transition shadow-sm"
-          >
-            <Pencil className="h-4 w-4" />
-          </button>
-        </>
+        <div
+          className="p-4 rounded-xl border border-theme hover:bg-(--muted/5) transition cursor-pointer w-full min-w-0"
+          onClick={() => setEditing(true)}
+        >
+          <p className="text-(--text) whitespace-pre-line wrap-break-word">
+            {value}
+          </p>
+        </div>
       )}
     </div>
   );

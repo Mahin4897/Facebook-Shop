@@ -1,23 +1,19 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import {
   UserPlus,
   ShoppingBag,
-  Package,
   DollarSign,
   X,
-  Plus,
   Truck,
   CheckCircle,
   Clock,
   AlertCircle,
   Calendar,
   CreditCard,
-  Edit,
-  Check,
   ChevronDown,
 } from "lucide-react";
 
@@ -67,13 +63,11 @@ const PAYMENT_METHODS = [
 
 /* -------------------- COMPONENT -------------------- */
 export default function AddOrderPage() {
-  const router = useRouter();
-
   const [customerId, setCustomerId] = useState("");
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("pending");
   const [paymentMethod, setPaymentMethod] = useState("cash");
-  const [notes, setNotes] = useState("");
+
   const [showItemDrawer, setShowItemDrawer] = useState(false);
 
   const [orderInfo, setOrderInfo] = useState({
@@ -121,7 +115,7 @@ export default function AddOrderPage() {
       </div>
 
       {/* CUSTOMER */}
-      <div className="bg-card rounded-2xl p-6 shadow space-y-4">
+      <div className="bg-card rounded-2xl p-6 shadow space-y-4 border border-theme">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <UserPlus className="w-5 h-5" /> Customer
         </h2>
@@ -152,7 +146,7 @@ export default function AddOrderPage() {
       </div>
 
       {/* ORDER INFO */}
-      <div className="bg-card rounded-2xl p-6 shadow space-y-4">
+      <div className="bg-card rounded-2xl p-6 shadow space-y-4 border border-theme">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <Calendar className="w-5 h-5" /> Order Info
         </h2>
@@ -188,7 +182,7 @@ export default function AddOrderPage() {
       </div>
 
       {/* ITEMS */}
-      <div className="bg-card rounded-2xl p-6 shadow space-y-4">
+      <div className="bg-card rounded-2xl p-6 shadow space-y-4 border border-theme">
         <div className="flex justify-between items-center">
           <h2 className="text-xl font-semibold flex items-center gap-2">
             <ShoppingBag className="w-5 h-5" /> Items
@@ -236,9 +230,7 @@ export default function AddOrderPage() {
                     −
                   </button>
 
-                  <span className="min-w-[24px] text-center">
-                    {item.quantity}
-                  </span>
+                  <span className="min-w-6 text-center">{item.quantity}</span>
 
                   <button
                     type="button"
@@ -272,8 +264,66 @@ export default function AddOrderPage() {
         )}
       </div>
 
+      <div className="rounded-2xl p-6 shadow bg-card border border-theme space-y-3">
+        <h2 className="text-xl font-semibold flex items-center gap-2">
+          <AlertCircle className="w-5 h-5" />
+          Order Status
+        </h2>
+
+        <div className="relative">
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value)}
+            className="
+        w-full px-4 py-3 rounded-xl border appearance-none
+        bg-card text-(--text)
+        border-theme
+        focus:outline-none focus:ring-2 focus:ring-blue-500
+      "
+          >
+            {STATUS_OPTIONS.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </select>
+
+          <ChevronDown
+            className="absolute right-3 top-1/2 -translate-y-1/2
+      w-4 h-4 text-muted pointer-events-none"
+          />
+        </div>
+      </div>
+
+      <div className="rounded-2xl p-6 shadow bg-card border border-theme space-y-3">
+        <h2 className="text-xl font-semibold flex items-center gap-2">
+          <CreditCard className="w-5 h-5" />
+          Payment Method
+        </h2>
+
+        <div className="grid grid-cols-2 gap-3">
+          {PAYMENT_METHODS.map((p) => (
+            <button
+              key={p.value}
+              type="button"
+              onClick={() => setPaymentMethod(p.value)}
+              className={`
+          px-3 py-2 rounded-xl border text-sm transition
+          ${
+            paymentMethod === p.value
+              ? "bg-blue-600 text-white border-blue-600"
+              : "bg-card border-theme hover:bg-muted/10"
+          }
+        `}
+            >
+              {p.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* SUMMARY */}
-      <div className="bg-card rounded-2xl p-6 shadow space-y-2">
+      <div className="bg-card rounded-2xl p-6 shadow space-y-2 border border-theme">
         <h2 className="text-xl font-semibold flex items-center gap-2">
           <DollarSign className="w-5 h-5" /> Summary
         </h2>

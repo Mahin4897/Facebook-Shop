@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import ThemeToggle from "@/components/ui/ThemeToggle";
 import {
@@ -117,7 +117,7 @@ export default function CustomerPage() {
       </div>
 
       {/* Customer Info Card - Wide */}
-      <div className="rounded-3xl border p-8 bg-(--card) shadow-sm">
+      <div className="rounded-3xl border border-theme p-8 bg-(--card) shadow-sm">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Customer Basic Info */}
           <div className="space-y-6">
@@ -288,7 +288,7 @@ export default function CustomerPage() {
               </h3>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="rounded-xl border p-4 bg-(--muted/5)">
+                <div className="rounded-xl border p-4 border-theme bg-(--muted/5)">
                   <div className="flex items-center gap-2 mb-2">
                     <ShoppingBag className="h-4 w-4 text-(--muted)" />
                     <p className="text-sm text-(--muted)">Total Orders</p>
@@ -296,7 +296,7 @@ export default function CustomerPage() {
                   <p className="text-2xl font-bold">{customer.totalOrders}</p>
                 </div>
 
-                <div className="rounded-xl border p-4 bg-(--muted/5)">
+                <div className="rounded-xl border p-4 border-theme bg-(--muted/5)">
                   <div className="flex items-center gap-2 mb-2">
                     <DollarSign className="h-4 w-4 text-(--muted)" />
                     <p className="text-sm text-(--muted)">Total Spent</p>
@@ -306,7 +306,7 @@ export default function CustomerPage() {
                   </p>
                 </div>
 
-                <div className="rounded-xl border p-4 bg-(--muted/5) col-span-2">
+                <div className="rounded-xl border p-4 border-theme bg-(--muted/5) col-span-2">
                   <div className="flex items-center gap-2 mb-2">
                     <Calendar className="h-4 w-4 text-(--muted)" />
                     <p className="text-sm text-(--muted)">Customer Since</p>
@@ -348,7 +348,7 @@ export default function CustomerPage() {
         </div>
 
         {/* Orders Table */}
-        <div className="rounded-3xl border overflow-hidden bg-(--card)">
+        <div className="rounded-3xl border border-theme overflow-hidden bg-(--card)">
           {paginatedOrders.length === 0 ? (
             <div className="p-8 text-center">
               <p className="text-(--muted)">No orders found</p>
@@ -372,7 +372,7 @@ export default function CustomerPage() {
                     {paginatedOrders.map((order) => (
                       <tr
                         key={order.id}
-                        className="border-b border-(--border/50) hover:bg-(--muted/5) transition cursor-pointer"
+                        className="border-b border-(--border/50) hover:transform hover:scale-101 transition cursor-pointer"
                         onClick={() => handleOrderClick(order.id)}
                       >
                         <td className="p-4 font-medium">{order.id}</td>
